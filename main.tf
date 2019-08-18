@@ -1,8 +1,3 @@
-# Jenkins Volume
-resource "docker_volume" "jenkins_volume" {
-  name = "jenkins_data"
-}
-
 # Start the Jenkins Container
 resource "docker_container" "jenkins_container" {
   name  = "jenkins"
@@ -13,7 +8,7 @@ resource "docker_container" "jenkins_container" {
   }
 
   volumes {
-    volume_name    = "${docker_volume.jenkins_volume.name}"
+    volume_name    = "${var.jenkins_volume}"
     container_path = "/var/jenkins_home"
   }
 
