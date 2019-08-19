@@ -5,7 +5,7 @@ jobs:
   include:
     -
       script:
-        - "docker build -t jenkins/terraform ."
+        - "docker build -t jenkins:terraform ."
         - "docker volume create jenkins_volume"
         - "docker run -v $(pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light init"
         - "docker run -v $(pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light validate"
