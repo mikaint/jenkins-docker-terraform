@@ -6,7 +6,6 @@ jobs:
     -
       script:
         - "docker build -t jenkins/terraform ."
-        - "docker run jenkins/terraform"
       stage: "build-docker-image"
     -
       script:
