@@ -6,16 +6,13 @@ jobs:
     -
       script:
         - "docker build -t jenkins/terraform ."
-      stage: "build-docker-image"
-    -
-      script:
         - "docker volume create jenkins_volume"
         - "docker run -v $(pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light init"
         - "docker run -v $(pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light validate"
         - "docker run -v $(pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light plan -out=tfplan"
         - "docker run -v $(pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light apply --auto-approve tfplan"
-      stage: "build-jenkins"
+      stage: "build"
     -
       script:
         - "docker run -v $(pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light destroy --auto-approve"
-      stage: "destroy-jenkins"  
+      stage: "destroy"  
