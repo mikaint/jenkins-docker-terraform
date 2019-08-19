@@ -10,12 +10,12 @@ jobs:
     -
       script:
         - "docker volume create jenkins_volume"
-        - "docker run -v $(shell pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light init"
-        - "docker run -v $(shell pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light validate"
-        - "docker run -v $(shell pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light plan -out=tfplan"
-        - "docker run -v $(shell pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light apply --auto-approve tfplan"
+        - "docker run -v $(pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light init"
+        - "docker run -v $(pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light validate"
+        - "docker run -v $(pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light plan -out=tfplan"
+        - "docker run -v $(pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light apply --auto-approve tfplan"
       stage: "build-jenkins"
     -
       script:
-        - "docker run -v $(shell pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light destroy --auto-approve"
+        - "docker run -v $(pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light destroy --auto-approve"
       stage: "destroy-jenkins"  
