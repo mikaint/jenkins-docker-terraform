@@ -11,8 +11,5 @@ jobs:
         - "docker run -v $(pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light validate"
         - "docker run -v $(pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light plan -out=tfplan"
         - "docker run -v $(pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light apply --auto-approve tfplan"
-      stage: "build"
-    -
-      script:
         - "docker run -v $(pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light destroy --auto-approve"
-      stage: "destroy"  
+      stage: "test-all"  
