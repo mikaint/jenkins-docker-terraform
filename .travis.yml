@@ -1,0 +1,22 @@
+services:
+  - docker
+language: go
+jobs:
+  include:
+    -
+      script:
+        - "docker build -t jenkins/terraform ."
+        - "docker run jenkins/terraform"
+      stage: "build-docker-image"
+    -
+      script:
+        - "docker volume create jenkins_volume"
+        - "docker run -v $(shell pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light init"
+        - "docker run -v $(shell pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light validate"
+        - "docker run -v $(shell pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light plan -out=tfplan"
+        - "docker run -v $(shell pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light apply --auto-approve tfplan"
+      stage: "build-jenkins"
+    -
+      script:
+        - "docker run -v $(shell pwd):/home -v /var/run/docker.sock:/var/run/docker.sock -w /home hashicorp/terraform:light destroy --auto-approve"
+      stage: "destroy-jenkins"  
