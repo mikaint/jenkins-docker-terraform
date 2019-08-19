@@ -11,6 +11,6 @@ In order to have dockerized Jenkins up and running you need to run `make up`. Th
 
 You can check the Makefile for the actual commands.
 
-To stop the container juat run `make down`
+To stop the container just run `make down`
 
 To retrieve password for admin user run `docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword`
